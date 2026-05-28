@@ -3,6 +3,7 @@ package com.example.Ehpad.service;
 import java.time.LocalDate;
 import java.util.List;
 
+import com.example.Ehpad.dto.ExecutionSoinCreateDTO;
 import com.example.Ehpad.dto.ExecutionSoinDTO;
 import com.example.Ehpad.entity.AideSoignant;
 import com.example.Ehpad.entity.ExecutionSoin;
@@ -57,7 +58,7 @@ public class ExecutionSoinService {
         return executionSoinMapper.toDTO(executionSoin);
     }
     
-    public ExecutionSoinDTO createExecutionSoin(ExecutionSoinDTO executionSoinDTO) {
+    public ExecutionSoinDTO createExecutionSoin(ExecutionSoinCreateDTO executionSoinDTO) {
         log.info("Creating care execution for patient: {}", executionSoinDTO.getPatientId());
         
         Patient patient = patientRepository.findById(executionSoinDTO.getPatientId())

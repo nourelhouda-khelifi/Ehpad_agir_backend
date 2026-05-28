@@ -1,7 +1,6 @@
 package com.example.Ehpad.dto;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 import com.example.Ehpad.entity.PlanningStatut;
 import com.example.Ehpad.entity.SoinMoment;
@@ -18,20 +17,18 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class PlanningSoinDTO {
-    private Long id;
-    
+public class PlanningSoinCreateDTO {
     @NotNull(message = "Patient requis")
     private Long patientId;
-    
+
     @NotNull(message = "Type de soin requis")
     private Long typeSoinId;
-    
+
     private Long aideSoignantId;
-    
+
     @NotNull(message = "Date prévue requise")
     private LocalDate datePrevue;
-    
+
     @Size(max = 20, message = "Jour de semaine ne doit pas dépasser 20 caractères")
     private String jourSemaine;
 
@@ -40,17 +37,8 @@ public class PlanningSoinDTO {
     private String heurePrevue;
 
     private Integer dureePrevue;
-    
+
     private SoinMoment moment;
     private PlanningStatut statut;
     private String commentaire;
-    
-    // Audit
-    private LocalDateTime createdAt;
-    private LocalDateTime updatedAt;
-    
-    // Pour les réponses - relations dénormalisées
-    private PatientDTO patient;
-    private TypeSoinDTO typeSoin;
-    private AideSoignantDTO aideSoignant;
 }

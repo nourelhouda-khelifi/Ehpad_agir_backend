@@ -3,8 +3,10 @@ package com.example.Ehpad.mapper;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import com.example.Ehpad.dto.ExecutionSoinCreateDTO;
 import com.example.Ehpad.dto.ExecutionSoinDTO;
 import com.example.Ehpad.entity.ExecutionSoin;
+import com.example.Ehpad.entity.PlanningSoin;
 
 import org.springframework.stereotype.Component;
 
@@ -51,6 +53,20 @@ public class ExecutionSoinMapper {
         
         return ExecutionSoin.builder()
                 .id(dto.getId())
+                .dateExecution(dto.getDateExecution())
+                .heureExecution(dto.getHeureExecution())
+                .statut(dto.getStatut())
+                .commentaire(dto.getCommentaire())
+                .build();
+    }
+
+    public ExecutionSoin toEntity(ExecutionSoinCreateDTO dto) {
+        if (dto == null) {
+            return null;
+        }
+
+        return ExecutionSoin.builder()
+                .planningSoin(dto.getPlanningSoinId() != null ? PlanningSoin.builder().id(dto.getPlanningSoinId()).build() : null)
                 .dateExecution(dto.getDateExecution())
                 .heureExecution(dto.getHeureExecution())
                 .statut(dto.getStatut())

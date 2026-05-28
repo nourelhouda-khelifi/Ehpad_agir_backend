@@ -3,6 +3,7 @@ package com.example.Ehpad.controller;
 import java.time.LocalDate;
 import java.util.List;
 
+import com.example.Ehpad.dto.PlanningSoinCreateDTO;
 import com.example.Ehpad.dto.PlanningSoinDTO;
 import com.example.Ehpad.service.PlanningSoinService;
 
@@ -60,7 +61,7 @@ public class PlanningSoinController {
     }
     
     @PostMapping
-    public ResponseEntity<PlanningSoinDTO> createPlanningSoin(@Valid @RequestBody PlanningSoinDTO planningSoinDTO) {
+    public ResponseEntity<PlanningSoinDTO> createPlanningSoin(@Valid @RequestBody PlanningSoinCreateDTO planningSoinDTO) {
         log.info("POST /api/plannings - Creating planning");
         PlanningSoinDTO createdPlanningSoin = planningSoinService.createPlanningSoin(planningSoinDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdPlanningSoin);

@@ -2,6 +2,7 @@ package com.example.Ehpad.controller;
 
 import java.util.List;
 
+import com.example.Ehpad.dto.PatientNoteCreateDTO;
 import com.example.Ehpad.dto.PatientNoteDTO;
 import com.example.Ehpad.service.PatientNoteService;
 
@@ -41,7 +42,7 @@ public class PatientNoteController {
     }
     
     @PostMapping("/patient/{patientId}")
-    public ResponseEntity<PatientNoteDTO> createNote(@PathVariable Long patientId, @Valid @RequestBody PatientNoteDTO patientNoteDTO) {
+    public ResponseEntity<PatientNoteDTO> createNote(@PathVariable Long patientId, @Valid @RequestBody PatientNoteCreateDTO patientNoteDTO) {
         log.info("POST /api/notes/patient/{} - Creating note", patientId);
         PatientNoteDTO createdNote = patientNoteService.createNote(patientId, patientNoteDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdNote);

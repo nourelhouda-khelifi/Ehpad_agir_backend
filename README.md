@@ -66,6 +66,8 @@ Reponse attendue :
 ## Rappel
 
 - La base PostgreSQL doit être démarrée avant l'application.
+- Les données ne sont plus supprimées au redémarrage de l'application, car Hibernate est en mode `update`.
+- Si tu veux repartir de zéro, il faut supprimer le volume Docker PostgreSQL ou vider la base manuellement.
 - Les tests utilisent H2 en mémoire, donc ils ne dépendent pas du conteneur PostgreSQL.
 
 ## Dépannage Docker sous Windows

@@ -2,6 +2,7 @@ package com.example.Ehpad.controller;
 
 import java.util.List;
 
+import com.example.Ehpad.dto.TypeSoinCreateDTO;
 import com.example.Ehpad.dto.TypeSoinDTO;
 import com.example.Ehpad.service.TypeSoinService;
 
@@ -41,7 +42,7 @@ public class TypeSoinController {
     }
     
     @PostMapping
-    public ResponseEntity<TypeSoinDTO> createTypeSoin(@Valid @RequestBody TypeSoinDTO typeSoinDTO) {
+    public ResponseEntity<TypeSoinDTO> createTypeSoin(@Valid @RequestBody TypeSoinCreateDTO typeSoinDTO) {
         log.info("POST /api/types-soins - Creating care type: {}", typeSoinDTO.getCode());
         TypeSoinDTO createdTypeSoin = typeSoinService.createTypeSoin(typeSoinDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdTypeSoin);

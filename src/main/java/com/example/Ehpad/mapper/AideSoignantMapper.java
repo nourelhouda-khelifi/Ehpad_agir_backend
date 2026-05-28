@@ -3,6 +3,7 @@ package com.example.Ehpad.mapper;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import com.example.Ehpad.dto.AideSoignantCreateDTO;
 import com.example.Ehpad.dto.AideSoignantDTO;
 import com.example.Ehpad.entity.AideSoignant;
 
@@ -34,6 +35,21 @@ public class AideSoignantMapper {
         
         return AideSoignant.builder()
                 .id(dto.getId())
+                .code(dto.getCode())
+                .nom(dto.getNom())
+                .prenom(dto.getPrenom())
+                .secteur(dto.getSecteur())
+                .color(dto.getColor())
+                .actif(dto.getActif())
+                .build();
+    }
+
+    public AideSoignant toEntity(AideSoignantCreateDTO dto) {
+        if (dto == null) {
+            return null;
+        }
+
+        return AideSoignant.builder()
                 .code(dto.getCode())
                 .nom(dto.getNom())
                 .prenom(dto.getPrenom())

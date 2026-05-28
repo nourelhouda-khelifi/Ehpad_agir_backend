@@ -2,6 +2,7 @@ package com.example.Ehpad.service;
 
 import java.util.List;
 
+import com.example.Ehpad.dto.TypeSoinCreateDTO;
 import com.example.Ehpad.dto.TypeSoinDTO;
 import com.example.Ehpad.entity.TypeSoin;
 import com.example.Ehpad.mapper.TypeSoinMapper;
@@ -44,7 +45,7 @@ public class TypeSoinService {
         return typeSoinMapper.toDTO(typeSoin);
     }
     
-    public TypeSoinDTO createTypeSoin(TypeSoinDTO typeSoinDTO) {
+    public TypeSoinDTO createTypeSoin(TypeSoinCreateDTO typeSoinDTO) {
         log.info("Creating care type: {}", typeSoinDTO.getCode());
         TypeSoin typeSoin = typeSoinMapper.toEntity(typeSoinDTO);
         TypeSoin savedTypeSoin = typeSoinRepository.save(typeSoin);

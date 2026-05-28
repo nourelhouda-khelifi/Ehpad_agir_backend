@@ -3,6 +3,7 @@ package com.example.Ehpad.mapper;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import com.example.Ehpad.dto.PlanningSoinCreateDTO;
 import com.example.Ehpad.dto.PlanningSoinDTO;
 import com.example.Ehpad.entity.PlanningSoin;
 
@@ -53,6 +54,22 @@ public class PlanningSoinMapper {
         
         return PlanningSoin.builder()
                 .id(dto.getId())
+                .datePrevue(dto.getDatePrevue())
+                .jourSemaine(dto.getJourSemaine())
+                .heurePrevue(dto.getHeurePrevue())
+                .dureePrevue(dto.getDureePrevue())
+                .moment(dto.getMoment())
+                .statut(dto.getStatut())
+                .commentaire(dto.getCommentaire())
+                .build();
+    }
+
+    public PlanningSoin toEntity(PlanningSoinCreateDTO dto) {
+        if (dto == null) {
+            return null;
+        }
+
+        return PlanningSoin.builder()
                 .datePrevue(dto.getDatePrevue())
                 .jourSemaine(dto.getJourSemaine())
                 .heurePrevue(dto.getHeurePrevue())

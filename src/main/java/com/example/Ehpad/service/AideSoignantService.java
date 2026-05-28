@@ -2,6 +2,7 @@ package com.example.Ehpad.service;
 
 import java.util.List;
 
+import com.example.Ehpad.dto.AideSoignantCreateDTO;
 import com.example.Ehpad.dto.AideSoignantDTO;
 import com.example.Ehpad.entity.AideSoignant;
 import com.example.Ehpad.mapper.AideSoignantMapper;
@@ -44,7 +45,7 @@ public class AideSoignantService {
         return aideSoignantMapper.toDTO(aideSoignant);
     }
     
-    public AideSoignantDTO createAideSoignant(AideSoignantDTO aideSoignantDTO) {
+    public AideSoignantDTO createAideSoignant(AideSoignantCreateDTO aideSoignantDTO) {
         log.info("Creating care staff member: {}", aideSoignantDTO.getCode());
         AideSoignant aideSoignant = aideSoignantMapper.toEntity(aideSoignantDTO);
         AideSoignant savedAideSoignant = aideSoignantRepository.save(aideSoignant);

@@ -2,6 +2,7 @@ package com.example.Ehpad.service;
 
 import java.util.List;
 
+import com.example.Ehpad.dto.PatientNoteCreateDTO;
 import com.example.Ehpad.dto.PatientNoteDTO;
 import com.example.Ehpad.entity.Patient;
 import com.example.Ehpad.entity.PatientNote;
@@ -52,7 +53,7 @@ public class PatientNoteService {
         return patientNoteMapper.toDTOList(patientNoteRepository.findByPatientIdOrderByDateNoteDesc(patientId));
     }
     
-    public PatientNoteDTO createNote(Long patientId, PatientNoteDTO patientNoteDTO) {
+    public PatientNoteDTO createNote(Long patientId, PatientNoteCreateDTO patientNoteDTO) {
         log.info("Creating note for patient: {}", patientId);
         Patient patient = patientRepository.findById(patientId)
                 .orElseThrow(() -> new EntityNotFoundException("Patient not found with id: " + patientId));

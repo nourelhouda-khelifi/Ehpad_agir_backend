@@ -3,6 +3,7 @@ package com.example.Ehpad.service;
 import java.time.LocalDate;
 import java.util.List;
 
+import com.example.Ehpad.dto.PlanningSoinCreateDTO;
 import com.example.Ehpad.dto.PlanningSoinDTO;
 import com.example.Ehpad.entity.AideSoignant;
 import com.example.Ehpad.entity.Patient;
@@ -53,7 +54,7 @@ public class PlanningSoinService {
         return planningSoinMapper.toDTO(planningSoin);
     }
     
-    public PlanningSoinDTO createPlanningSoin(PlanningSoinDTO planningSoinDTO) {
+    public PlanningSoinDTO createPlanningSoin(PlanningSoinCreateDTO planningSoinDTO) {
         log.info("Creating care planning for patient: {}", planningSoinDTO.getPatientId());
         
         Patient patient = patientRepository.findById(planningSoinDTO.getPatientId())
@@ -64,7 +65,7 @@ public class PlanningSoinService {
         PlanningSoin planningSoin = planningSoinMapper.toEntity(planningSoinDTO);
         planningSoin.setPatient(patient);
         planningSoin.setTypeSoin(typeSoin);
-        planningSoin.setStatut(PlanningStatut.PLANIFIE);
+        planningSoin.setStatut(planningSoinDTO.getStatut() != null ? planningSoinDTO.getStatut() : PlanningStatut.PLANIFIE);
         
         if (planningSoinDTO.getAideSoignantId() != null) {
             AideSoignant aideSoignant = aideSoignantRepository.findById(planningSoinDTO.getAideSoignantId())

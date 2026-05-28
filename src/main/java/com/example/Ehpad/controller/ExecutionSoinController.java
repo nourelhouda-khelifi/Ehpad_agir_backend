@@ -3,6 +3,7 @@ package com.example.Ehpad.controller;
 import java.time.LocalDate;
 import java.util.List;
 
+import com.example.Ehpad.dto.ExecutionSoinCreateDTO;
 import com.example.Ehpad.dto.ExecutionSoinDTO;
 import com.example.Ehpad.service.ExecutionSoinService;
 
@@ -60,7 +61,7 @@ public class ExecutionSoinController {
     }
     
     @PostMapping
-    public ResponseEntity<ExecutionSoinDTO> createExecutionSoin(@Valid @RequestBody ExecutionSoinDTO executionSoinDTO) {
+    public ResponseEntity<ExecutionSoinDTO> createExecutionSoin(@Valid @RequestBody ExecutionSoinCreateDTO executionSoinDTO) {
         log.info("POST /api/executions - Creating execution");
         ExecutionSoinDTO createdExecutionSoin = executionSoinService.createExecutionSoin(executionSoinDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdExecutionSoin);

@@ -3,6 +3,7 @@ package com.example.Ehpad.mapper;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import com.example.Ehpad.dto.PatientNoteCreateDTO;
 import com.example.Ehpad.dto.PatientNoteDTO;
 import com.example.Ehpad.entity.PatientNote;
 
@@ -36,6 +37,19 @@ public class PatientNoteMapper {
         return PatientNote.builder()
                 .id(dto.getId())
                 .auteurId(dto.getAuteurId())
+                .contenu(dto.getContenu())
+                .dateNote(dto.getDateNote())
+                .important(dto.getImportant())
+                .categorieNote(dto.getCategorieNote())
+                .build();
+    }
+
+    public PatientNote toEntity(PatientNoteCreateDTO dto) {
+        if (dto == null) {
+            return null;
+        }
+
+        return PatientNote.builder()
                 .contenu(dto.getContenu())
                 .dateNote(dto.getDateNote())
                 .important(dto.getImportant())
