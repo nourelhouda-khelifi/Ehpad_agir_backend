@@ -2,7 +2,9 @@ package com.example.Ehpad.controller;
 
 import java.util.List;
 
+import com.example.Ehpad.dto.PatientAlertCreateDTO;
 import com.example.Ehpad.dto.PatientAlertDTO;
+import com.example.Ehpad.entity.AlerteType;
 import com.example.Ehpad.service.PatientAlertService;
 
 import org.springframework.http.HttpStatus;
@@ -45,6 +47,12 @@ public class PatientAlertController {
         log.info("GET /api/alertes/aide-soignant/{}", aideSoignantId);
         return ResponseEntity.ok(patientAlertService.getAlertsByAideSoignantId(aideSoignantId));
     }
+
+    @GetMapping("/type/{type}")
+    public ResponseEntity<List<PatientAlertDTO>> getAlertsByType(@PathVariable AlerteType type) {
+        log.info("GET /api/alertes/type/{}", type);
+        return ResponseEntity.ok(patientAlertService.getAlertsByType(type));
+    }
     
     @GetMapping("/unresolved")
     public ResponseEntity<List<PatientAlertDTO>> getUnresolvedAlerts() {
@@ -59,7 +67,7 @@ public class PatientAlertController {
     }
     
     @PostMapping
-    public ResponseEntity<PatientAlertDTO> createAlert(@Valid @RequestBody PatientAlertDTO patientAlertDTO) {
+    public ResponseEntity<PatientAlertDTO> createAlert(@Valid @RequestBody PatientAlertCreateDTO patientAlertDTO) {
         log.info("POST /api/alertes - Creating alert");
         PatientAlertDTO createdAlert = patientAlertService.createAlert(patientAlertDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdAlert);

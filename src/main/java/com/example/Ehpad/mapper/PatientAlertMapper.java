@@ -3,6 +3,7 @@ package com.example.Ehpad.mapper;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import com.example.Ehpad.dto.PatientAlertCreateDTO;
 import com.example.Ehpad.dto.PatientAlertDTO;
 import com.example.Ehpad.entity.PatientAlert;
 
@@ -44,6 +45,18 @@ public class PatientAlertMapper {
                 .resolue(dto.getResolue())
                 .dateCreation(dto.getDateCreation())
                 .dateResolution(dto.getDateResolution())
+                .build();
+    }
+
+    public PatientAlert toEntity(PatientAlertCreateDTO dto) {
+        if (dto == null) {
+            return null;
+        }
+
+        return PatientAlert.builder()
+                .type(dto.getType())
+                .niveau(dto.getNiveau())
+                .message(dto.getMessage())
                 .build();
     }
     

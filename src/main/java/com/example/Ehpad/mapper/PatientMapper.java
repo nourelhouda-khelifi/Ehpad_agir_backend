@@ -3,6 +3,7 @@ package com.example.Ehpad.mapper;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import com.example.Ehpad.dto.PatientCreateDTO;
 import com.example.Ehpad.dto.PatientDTO;
 import com.example.Ehpad.entity.Patient;
 
@@ -45,6 +46,30 @@ public class PatientMapper {
         
         return Patient.builder()
                 .id(dto.getId())
+                .numeroChambre(dto.getNumeroChambre())
+                .nom(dto.getNom())
+                .prenom(dto.getPrenom())
+                .etage(dto.getEtage())
+                .statut(dto.getStatut())
+                .categorie(dto.getCategorie())
+                .profil(dto.getProfil())
+                .tempsToiletteLit(dto.getTempsToiletteLit())
+                .tempsToiletteVasque(dto.getTempsToiletteVasque())
+                .tempsToiletteMoyen(dto.getTempsToiletteMoyen())
+                .tempsWcMoyen(dto.getTempsWcMoyen())
+                .tempsCoucherMoyen(dto.getTempsCoucherMoyen())
+                .aideSoignant(dto.getAideSoignant())
+                .petitDejeunerAide(dto.getPetitDejeunerAide())
+                .sansDouche(dto.getSansDouche())
+                .build();
+    }
+
+    public Patient toEntity(PatientCreateDTO dto) {
+        if (dto == null) {
+            return null;
+        }
+
+        return Patient.builder()
                 .numeroChambre(dto.getNumeroChambre())
                 .nom(dto.getNom())
                 .prenom(dto.getPrenom())

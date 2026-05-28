@@ -2,6 +2,7 @@ package com.example.Ehpad.controller;
 
 import java.util.List;
 
+import com.example.Ehpad.dto.PatientCreateDTO;
 import com.example.Ehpad.dto.PatientDTO;
 import com.example.Ehpad.entity.PatientCategorie;
 import com.example.Ehpad.entity.PatientStatut;
@@ -61,7 +62,7 @@ public class PatientController {
     }
     
     @PostMapping
-    public ResponseEntity<PatientDTO> createPatient(@Valid @RequestBody PatientDTO patientDTO) {
+    public ResponseEntity<PatientDTO> createPatient(@Valid @RequestBody PatientCreateDTO patientDTO) {
         log.info("POST /api/patients - Creating patient: {}", patientDTO.getNom());
         PatientDTO createdPatient = patientService.createPatient(patientDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdPatient);

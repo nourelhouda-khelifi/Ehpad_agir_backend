@@ -2,6 +2,7 @@ package com.example.Ehpad.service;
 
 import java.util.List;
 
+import com.example.Ehpad.dto.PatientCreateDTO;
 import com.example.Ehpad.dto.PatientDTO;
 import com.example.Ehpad.entity.Patient;
 import com.example.Ehpad.entity.PatientCategorie;
@@ -39,7 +40,7 @@ public class PatientService {
         return patientMapper.toDTO(patient);
     }
     
-    public PatientDTO createPatient(PatientDTO patientDTO) {
+    public PatientDTO createPatient(PatientCreateDTO patientDTO) {
         log.info("Creating patient: {}", patientDTO.getNom());
         Patient patient = patientMapper.toEntity(patientDTO);
         Patient savedPatient = patientRepository.save(patient);

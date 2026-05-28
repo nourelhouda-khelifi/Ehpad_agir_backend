@@ -2,7 +2,9 @@ package com.example.Ehpad.service;
 
 import java.util.List;
 
+import com.example.Ehpad.dto.PatientAlertCreateDTO;
 import com.example.Ehpad.dto.PatientAlertDTO;
+import com.example.Ehpad.entity.AlerteType;
 import com.example.Ehpad.entity.AideSoignant;
 import com.example.Ehpad.entity.Patient;
 import com.example.Ehpad.entity.PatientAlert;
@@ -55,6 +57,11 @@ public class PatientAlertService {
         log.info("Fetching alerts for staff member: {}", aideSoignantId);
         return patientAlertMapper.toDTOList(patientAlertRepository.findByAideSoignantId(aideSoignantId));
     }
+
+    public List<PatientAlertDTO> getAlertsByType(AlerteType type) {
+        log.info("Fetching alerts by type: {}", type);
+        return patientAlertMapper.toDTOList(patientAlertRepository.findByType(type));
+    }
     
     public List<PatientAlertDTO> getUnresolvedAlerts() {
         log.info("Fetching unresolved alerts");
@@ -66,7 +73,7 @@ public class PatientAlertService {
         return patientAlertMapper.toDTOList(patientAlertRepository.findByResolueTrue());
     }
     
-    public PatientAlertDTO createAlert(PatientAlertDTO patientAlertDTO) {
+    public PatientAlertDTO createAlert(PatientAlertCreateDTO patientAlertDTO) {
         log.info("Creating alert for patient: {}", patientAlertDTO.getPatientId());
         Patient patient = patientRepository.findById(patientAlertDTO.getPatientId())
                 .orElseThrow(() -> new EntityNotFoundException("Patient not found"));
@@ -74,11 +81,8 @@ public class PatientAlertService {
         PatientAlert patientAlert = patientAlertMapper.toEntity(patientAlertDTO);
         patientAlert.setPatient(patient);
         patientAlert.setResolue(false);
-        
-        if (patientAlertDTO.getAideSoignantId() != null) {
-            AideSoignant aideSoignant = aideSoignantRepository.findById(patientAlertDTO.getAideSoignantId())
-                    .orElseThrow(() -> new EntityNotFoundException("Care staff not found"));
-            patientAlert.setAideSoignant(aideSoignant);
+        if (patientAlert.getDateCreation() == null) {
+            patientAlert.setDateCreation(java.time.LocalDateTime.now());
         }
         
         PatientAlert savedAlert = patientAlertRepository.save(patientAlert);

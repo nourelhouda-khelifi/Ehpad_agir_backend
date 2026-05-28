@@ -18,9 +18,7 @@ Un exemple est disponible dans [.env.example](.env.example).
 
 Depuis la racine du projet :
 
-```bash
-docker compose up -d
-```
+```bash```
 
 Pour arrêter le conteneur :
 
