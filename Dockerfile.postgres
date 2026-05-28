@@ -1,0 +1,16 @@
+FROM postgres:16-alpine
+
+# Set environment variables
+ENV POSTGRES_DB=ehpad \
+    POSTGRES_USER=ehpad \
+    POSTGRES_PASSWORD=ehpad
+
+# Copy custom pg_hba.conf
+COPY pg_hba.conf /etc/postgresql/pg_hba.conf.custom
+
+# Copy initialization script
+COPY init-pg-docker.sh /docker-entrypoint-initdb.d/01-init-pg.sh
+
+RUN chmod +x /docker-entrypoint-initdb.d/01-init-pg.sh
+
+# The rest of the postgres initialization happens automatically
