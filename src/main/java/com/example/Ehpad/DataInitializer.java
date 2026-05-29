@@ -65,20 +65,6 @@ public class DataInitializer implements CommandLineRunner {
                                 .actif(true)
                                 .build();
 
-                TypeSoin typeSoin3 = TypeSoin.builder()
-                                .code("PANSEMENT")
-                                .libelle("Pansement")
-                                .dureeParDefaut(30)
-                                .actif(true)
-                                .build();
-
-                TypeSoin typeSoin4 = TypeSoin.builder()
-                                .code("INJECTION")
-                                .libelle("Injection")
-                                .dureeParDefaut(15)
-                                .actif(true)
-                                .build();
-
                 TypeSoin typeSoin5 = TypeSoin.builder()
                                 .code("AIDE_REPAS")
                                 .libelle("Aide repas")
@@ -86,11 +72,19 @@ public class DataInitializer implements CommandLineRunner {
                                 .actif(true)
                                 .build();
 
+                TypeSoin typeSoin6 = TypeSoin.builder()
+                                .code("COUCHER")
+                                .libelle("Coucher")
+                                .dureeParDefaut(30)
+                                .actif(true)
+                                .build();
+
                 typeSoinRepository.save(typeSoin1);
                 typeSoinRepository.save(typeSoin2);
                 typeSoinRepository.save(typeSoin5);
+                typeSoinRepository.save(typeSoin6);
 
-                log.info("Created 3 care types");
+                log.info("Created 4 care types");
 
                 // Create Aides Soignants
                 AideSoignant aideSoignant1 = AideSoignant.builder()
@@ -211,21 +205,8 @@ public class DataInitializer implements CommandLineRunner {
 
                 log.info("Created 3 test alerts");
 
-                // Create test ExecutionSoins for dashboard - only realistic care types
+                // Create test ExecutionSoins for dashboard - today's activities: 2 douches only
                 LocalDate today = LocalDate.now();
-                LocalDate yesterday = today.minusDays(1);
-                LocalDate twoDaysAgo = today.minusDays(2);
-
-                // Toilettes pour patient 1
-                ExecutionSoin exec1 = ExecutionSoin.builder()
-                                .patient(patient1)
-                                .aideSoignant(aideSoignant1)
-                                .typeSoin(typeSoin1)
-                                .dateExecution(today)
-                                .heureExecution("08:00")
-                                .statut(PlanningStatut.EFFECTUE)
-                                .commentaire("Toilette complète")
-                                .build();
 
                 // Douche pour patient 2
                 ExecutionSoin exec2 = ExecutionSoin.builder()
@@ -238,58 +219,21 @@ public class DataInitializer implements CommandLineRunner {
                                 .commentaire("Douche réalisée")
                                 .build();
 
-                // Aide repas pour patient 3
-                ExecutionSoin exec3 = ExecutionSoin.builder()
-                                .patient(patient3)
-                                .aideSoignant(aideSoignant1)
-                                .typeSoin(typeSoin5)
-                                .dateExecution(today)
-                                .heureExecution("12:00")
-                                .statut(PlanningStatut.EFFECTUE)
-                                .commentaire("Aide repas midi")
-                                .build();
-
-                // Toilettes pour patient 4
-                ExecutionSoin exec4 = ExecutionSoin.builder()
-                                .patient(patient4)
-                                .aideSoignant(aideSoignant2)
-                                .typeSoin(typeSoin1)
-                                .dateExecution(yesterday)
-                                .heureExecution("08:30")
-                                .statut(PlanningStatut.EFFECTUE)
-                                .commentaire("Toilette complète")
-                                .build();
-
                 // Douche pour patient 5
                 ExecutionSoin exec5 = ExecutionSoin.builder()
                                 .patient(patient5)
                                 .aideSoignant(aideSoignant1)
                                 .typeSoin(typeSoin2)
-                                .dateExecution(yesterday)
+                                .dateExecution(today)
                                 .heureExecution("10:00")
                                 .statut(PlanningStatut.EFFECTUE)
                                 .commentaire("Douche réalisée")
                                 .build();
 
-                // Aide repas pour patient 1
-                ExecutionSoin exec6 = ExecutionSoin.builder()
-                                .patient(patient1)
-                                .aideSoignant(aideSoignant2)
-                                .typeSoin(typeSoin5)
-                                .dateExecution(twoDaysAgo)
-                                .heureExecution("12:30")
-                                .statut(PlanningStatut.EFFECTUE)
-                                .commentaire("Aide repas midi")
-                                .build();
-
-                executionSoinRepository.save(exec1);
                 executionSoinRepository.save(exec2);
-                executionSoinRepository.save(exec3);
-                executionSoinRepository.save(exec4);
                 executionSoinRepository.save(exec5);
-                executionSoinRepository.save(exec6);
 
-                log.info("Created 6 test ExecutionSoins");
+                log.info("Created 2 test ExecutionSoins (2 douches today)");
 
                 log.info("Database initialization completed!");
         }
