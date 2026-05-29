@@ -97,9 +97,19 @@ public class DataInitializer implements CommandLineRunner {
                                 .actif(true)
                                 .build();
 
-                aideSoignantRepository.save(aideSoignant1);
+                AideSoignant aideSoignant2 = AideSoignant.builder()
+                                .code("SC1")
+                                .nom("Arnould")
+                                .prenom("Sophie")
+                                .secteur("Étage 1")
+                                .color("#4ECDC4")
+                                .actif(true)
+                                .build();
 
-                log.info("Created 1 care staff member");
+                aideSoignantRepository.save(aideSoignant1);
+                aideSoignantRepository.save(aideSoignant2);
+
+                log.info("Created 2 care staff members");
 
                 // Create Patients - matching frontend mockPatients
                 Patient patient1 = Patient.builder()

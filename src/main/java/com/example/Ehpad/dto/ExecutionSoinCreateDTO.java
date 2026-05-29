@@ -26,6 +26,7 @@ public class ExecutionSoinCreateDTO {
     private Long typeSoinId;
 
     private Long aideSoignantId;
+    private Long secondAideSoignantId; // Pour assignations 2 aides
 
     @NotNull(message = "Date d'exécution requise")
     private LocalDate dateExecution;
