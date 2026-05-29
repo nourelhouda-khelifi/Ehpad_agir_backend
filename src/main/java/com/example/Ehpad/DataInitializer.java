@@ -4,14 +4,18 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
 import com.example.Ehpad.entity.AideSoignant;
+import com.example.Ehpad.entity.AlerteNiveau;
+import com.example.Ehpad.entity.AlerteType;
 import com.example.Ehpad.entity.ExecutionSoin;
 import com.example.Ehpad.entity.Patient;
+import com.example.Ehpad.entity.PatientAlert;
 import com.example.Ehpad.entity.PatientCategorie;
 import com.example.Ehpad.entity.PatientStatut;
 import com.example.Ehpad.entity.PlanningStatut;
 import com.example.Ehpad.entity.TypeSoin;
 import com.example.Ehpad.repository.AideSoignantRepository;
 import com.example.Ehpad.repository.ExecutionSoinRepository;
+import com.example.Ehpad.repository.PatientAlertRepository;
 import com.example.Ehpad.repository.PatientRepository;
 import com.example.Ehpad.repository.TypeSoinRepository;
 
@@ -28,15 +32,18 @@ public class DataInitializer implements CommandLineRunner {
         private final AideSoignantRepository aideSoignantRepository;
         private final TypeSoinRepository typeSoinRepository;
         private final ExecutionSoinRepository executionSoinRepository;
+        private final PatientAlertRepository patientAlertRepository;
 
         public DataInitializer(PatientRepository patientRepository,
                         AideSoignantRepository aideSoignantRepository,
                         TypeSoinRepository typeSoinRepository,
-                        ExecutionSoinRepository executionSoinRepository) {
+                        ExecutionSoinRepository executionSoinRepository,
+                        PatientAlertRepository patientAlertRepository) {
                 this.patientRepository = patientRepository;
                 this.aideSoignantRepository = aideSoignantRepository;
                 this.typeSoinRepository = typeSoinRepository;
                 this.executionSoinRepository = executionSoinRepository;
+                this.patientAlertRepository = patientAlertRepository;
         }
 
         @Override
@@ -174,6 +181,37 @@ public class DataInitializer implements CommandLineRunner {
                 patientRepository.save(patient5);
 
                 log.info("Created 5 patients");
+
+                // Create test alerts
+                PatientAlert alert1 = PatientAlert.builder()
+                                .patient(patient1)
+                                .type(AlerteType.DOUCHE_MANQUANTE)
+                                .niveau(AlerteNiveau.MOYEN)
+                                .message("Aucune douche planifiée cette semaine")
+                                .resolue(false)
+                                .build();
+
+                PatientAlert alert2 = PatientAlert.builder()
+                                .patient(patient1)
+                                .type(AlerteType.PATIENT_ALERTE)
+                                .niveau(AlerteNiveau.CRITIQUE)
+                                .message("Patient signale une douleur persistante")
+                                .resolue(false)
+                                .build();
+
+                PatientAlert alert3 = PatientAlert.builder()
+                                .patient(patient2)
+                                .type(AlerteType.AS_SURCHARGE)
+                                .niveau(AlerteNiveau.BAS)
+                                .message("Aide-soignant surchargée aujourd'hui")
+                                .resolue(false)
+                                .build();
+
+                patientAlertRepository.save(alert1);
+                patientAlertRepository.save(alert2);
+                patientAlertRepository.save(alert3);
+
+                log.info("Created 3 test alerts");
 
                 // Les ExecutionSoins seront créés via l'API frontend
                 // (Pas de données de test pour ne pas surcharger SE1)
