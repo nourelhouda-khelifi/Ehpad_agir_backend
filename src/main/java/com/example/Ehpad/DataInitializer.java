@@ -213,8 +213,85 @@ public class DataInitializer implements CommandLineRunner {
 
                 log.info("Created 3 test alerts");
 
-                // Les ExecutionSoins seront créés via l'API frontend
-                // (Pas de données de test pour ne pas surcharger SE1)
+                // Create test ExecutionSoins for dashboard
+                LocalDate today = LocalDate.now();
+                LocalDate yesterday = today.minusDays(1);
+                LocalDate twoDaysAgo = today.minusDays(2);
+
+                // Toilettes pour patient 1
+                ExecutionSoin exec1 = ExecutionSoin.builder()
+                                .patient(patient1)
+                                .aideSoignant(aideSoignant1)
+                                .typeSoin(typeSoin1)
+                                .dateExecution(today)
+                                .heureExecution("08:00")
+                                .statut(PlanningStatut.EFFECTUE)
+                                .commentaire("Toilette complète sans incident")
+                                .build();
+
+                // Douche pour patient 2
+                ExecutionSoin exec2 = ExecutionSoin.builder()
+                                .patient(patient2)
+                                .aideSoignant(aideSoignant2)
+                                .typeSoin(typeSoin2)
+                                .dateExecution(today)
+                                .heureExecution("09:00")
+                                .statut(PlanningStatut.EFFECTUE)
+                                .commentaire("Douche réalisée sans problème")
+                                .build();
+
+                // Aide repas pour patient 3
+                ExecutionSoin exec3 = ExecutionSoin.builder()
+                                .patient(patient3)
+                                .aideSoignant(aideSoignant1)
+                                .typeSoin(typeSoin5)
+                                .dateExecution(today)
+                                .heureExecution("12:00")
+                                .statut(PlanningStatut.EFFECTUE)
+                                .commentaire("Repas pris correctement")
+                                .build();
+
+                // Pansement pour patient 4
+                ExecutionSoin exec4 = ExecutionSoin.builder()
+                                .patient(patient4)
+                                .aideSoignant(aideSoignant2)
+                                .typeSoin(typeSoin3)
+                                .dateExecution(yesterday)
+                                .heureExecution("14:00")
+                                .statut(PlanningStatut.EFFECTUE)
+                                .commentaire("Pansement changé")
+                                .build();
+
+                // Toilette pour patient 5
+                ExecutionSoin exec5 = ExecutionSoin.builder()
+                                .patient(patient5)
+                                .aideSoignant(aideSoignant1)
+                                .typeSoin(typeSoin1)
+                                .dateExecution(yesterday)
+                                .heureExecution("08:30")
+                                .statut(PlanningStatut.EFFECTUE)
+                                .commentaire("Toilette réalisée")
+                                .build();
+
+                // Injection pour patient 1
+                ExecutionSoin exec6 = ExecutionSoin.builder()
+                                .patient(patient1)
+                                .aideSoignant(aideSoignant2)
+                                .typeSoin(typeSoin4)
+                                .dateExecution(twoDaysAgo)
+                                .heureExecution("10:00")
+                                .statut(PlanningStatut.EFFECTUE)
+                                .commentaire("Injection effectuée")
+                                .build();
+
+                executionSoinRepository.save(exec1);
+                executionSoinRepository.save(exec2);
+                executionSoinRepository.save(exec3);
+                executionSoinRepository.save(exec4);
+                executionSoinRepository.save(exec5);
+                executionSoinRepository.save(exec6);
+
+                log.info("Created 6 test ExecutionSoins");
 
                 log.info("Database initialization completed!");
         }
