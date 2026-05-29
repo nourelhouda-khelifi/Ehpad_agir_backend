@@ -88,11 +88,9 @@ public class DataInitializer implements CommandLineRunner {
 
                 typeSoinRepository.save(typeSoin1);
                 typeSoinRepository.save(typeSoin2);
-                typeSoinRepository.save(typeSoin3);
-                typeSoinRepository.save(typeSoin4);
                 typeSoinRepository.save(typeSoin5);
 
-                log.info("Created 5 care types");
+                log.info("Created 3 care types");
 
                 // Create Aides Soignants
                 AideSoignant aideSoignant1 = AideSoignant.builder()
@@ -213,7 +211,7 @@ public class DataInitializer implements CommandLineRunner {
 
                 log.info("Created 3 test alerts");
 
-                // Create test ExecutionSoins for dashboard
+                // Create test ExecutionSoins for dashboard - only realistic care types
                 LocalDate today = LocalDate.now();
                 LocalDate yesterday = today.minusDays(1);
                 LocalDate twoDaysAgo = today.minusDays(2);
@@ -226,7 +224,7 @@ public class DataInitializer implements CommandLineRunner {
                                 .dateExecution(today)
                                 .heureExecution("08:00")
                                 .statut(PlanningStatut.EFFECTUE)
-                                .commentaire("Toilette complète sans incident")
+                                .commentaire("Toilette complète")
                                 .build();
 
                 // Douche pour patient 2
@@ -237,7 +235,7 @@ public class DataInitializer implements CommandLineRunner {
                                 .dateExecution(today)
                                 .heureExecution("09:00")
                                 .statut(PlanningStatut.EFFECTUE)
-                                .commentaire("Douche réalisée sans problème")
+                                .commentaire("Douche réalisée")
                                 .build();
 
                 // Aide repas pour patient 3
@@ -248,40 +246,40 @@ public class DataInitializer implements CommandLineRunner {
                                 .dateExecution(today)
                                 .heureExecution("12:00")
                                 .statut(PlanningStatut.EFFECTUE)
-                                .commentaire("Repas pris correctement")
+                                .commentaire("Aide repas midi")
                                 .build();
 
-                // Pansement pour patient 4
+                // Toilettes pour patient 4
                 ExecutionSoin exec4 = ExecutionSoin.builder()
                                 .patient(patient4)
                                 .aideSoignant(aideSoignant2)
-                                .typeSoin(typeSoin3)
-                                .dateExecution(yesterday)
-                                .heureExecution("14:00")
-                                .statut(PlanningStatut.EFFECTUE)
-                                .commentaire("Pansement changé")
-                                .build();
-
-                // Toilette pour patient 5
-                ExecutionSoin exec5 = ExecutionSoin.builder()
-                                .patient(patient5)
-                                .aideSoignant(aideSoignant1)
                                 .typeSoin(typeSoin1)
                                 .dateExecution(yesterday)
                                 .heureExecution("08:30")
                                 .statut(PlanningStatut.EFFECTUE)
-                                .commentaire("Toilette réalisée")
+                                .commentaire("Toilette complète")
                                 .build();
 
-                // Injection pour patient 1
+                // Douche pour patient 5
+                ExecutionSoin exec5 = ExecutionSoin.builder()
+                                .patient(patient5)
+                                .aideSoignant(aideSoignant1)
+                                .typeSoin(typeSoin2)
+                                .dateExecution(yesterday)
+                                .heureExecution("10:00")
+                                .statut(PlanningStatut.EFFECTUE)
+                                .commentaire("Douche réalisée")
+                                .build();
+
+                // Aide repas pour patient 1
                 ExecutionSoin exec6 = ExecutionSoin.builder()
                                 .patient(patient1)
                                 .aideSoignant(aideSoignant2)
-                                .typeSoin(typeSoin4)
+                                .typeSoin(typeSoin5)
                                 .dateExecution(twoDaysAgo)
-                                .heureExecution("10:00")
+                                .heureExecution("12:30")
                                 .statut(PlanningStatut.EFFECTUE)
-                                .commentaire("Injection effectuée")
+                                .commentaire("Aide repas midi")
                                 .build();
 
                 executionSoinRepository.save(exec1);
