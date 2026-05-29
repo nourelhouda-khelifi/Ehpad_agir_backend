@@ -165,53 +165,9 @@ public class DataInitializer implements CommandLineRunner {
 
                 log.info("Created 5 patients");
 
-                // Create some Executions Soins (Activities)
-                ExecutionSoin execution1 = ExecutionSoin.builder()
-                                .patient(patient1)
-                                .typeSoin(typeSoin1)
-                                .aideSoignant(aideSoignant1)
-                                .dateExecution(LocalDate.now())
-                                .heureExecution("08:30")
-                                .statut(PlanningStatut.EFFECTUE)
-                                .commentaire("Toilette terminée sans problème")
-                                .build();
+                // Les ExecutionSoins seront créés via l'API frontend
+                // (Pas de données de test pour ne pas surcharger SE1)
 
-                ExecutionSoin execution2 = ExecutionSoin.builder()
-                                .patient(patient2)
-                                .typeSoin(typeSoin2)
-                                .aideSoignant(aideSoignant1)
-                                .dateExecution(LocalDate.now())
-                                .heureExecution("09:00")
-                                .statut(PlanningStatut.EFFECTUE)
-                                .commentaire("Douche effectuée")
-                                .build();
-
-                ExecutionSoin execution3 = ExecutionSoin.builder()
-                                .patient(patient3)
-                                .typeSoin(typeSoin4)
-                                .aideSoignant(aideSoignant1)
-                                .dateExecution(LocalDate.now())
-                                .heureExecution("10:15")
-                                .statut(PlanningStatut.PLANIFIE)
-                                .commentaire("")
-                                .build();
-
-                ExecutionSoin execution4 = ExecutionSoin.builder()
-                                .patient(patient5)
-                                .typeSoin(typeSoin5)
-                                .aideSoignant(aideSoignant1)
-                                .dateExecution(LocalDate.now())
-                                .heureExecution("12:00")
-                                .statut(PlanningStatut.EFFECTUE)
-                                .commentaire("Aide repas terminée")
-                                .build();
-
-                executionSoinRepository.save(execution1);
-                executionSoinRepository.save(execution2);
-                executionSoinRepository.save(execution3);
-                executionSoinRepository.save(execution4);
-
-                log.info("Created 4 care executions");
                 log.info("Database initialization completed!");
         }
 }
