@@ -101,71 +101,60 @@ public class DataInitializer implements CommandLineRunner {
 
                 log.info("Created 1 care staff member");
 
-                // Create Patients
+                // Create Patients - matching frontend mockPatients
                 Patient patient1 = Patient.builder()
-                                .numeroChambre("101")
-                                .nom("Michel")
-                                .prenom("Albert")
+                                .numeroChambre("1er 12 S")
+                                .nom("Cormier")
+                                .prenom("Elyane")
                                 .etage(1)
                                 .statut(PatientStatut.HOSPITALISE)
-                                .categorie(PatientCategorie.CAT1)
-                                .profil("Profil 1 - Lucide, ambulant")
-                                .tempsToiletteLit(45)
+                                .categorie(PatientCategorie.CAT2)
+                                .profil("profil4")
+                                .tempsToiletteLit(15)
                                 .build();
 
                 Patient patient2 = Patient.builder()
-                                .numeroChambre("102")
-                                .nom("Bernard")
-                                .prenom("Marguerite")
+                                .numeroChambre("1er 13 S")
+                                .nom("Madoire")
+                                .prenom("Monique")
                                 .etage(1)
                                 .statut(PatientStatut.HOSPITALISE)
-                                .categorie(PatientCategorie.CAT2)
-                                .profil("Profil 2 - Lucide, ambulant")
-                                .tempsToiletteLit(50)
+                                .categorie(PatientCategorie.CAT1)
+                                .profil("profil1")
+                                .tempsToiletteLit(0)
                                 .build();
 
                 Patient patient3 = Patient.builder()
-                                .numeroChambre("201")
-                                .nom("Durand")
-                                .prenom("Jeanne")
-                                .etage(2)
+                                .numeroChambre("1er 14 S")
+                                .nom("Marysaël")
+                                .prenom("Suzanne")
+                                .etage(1)
                                 .statut(PatientStatut.HOSPITALISE)
-                                .categorie(PatientCategorie.CAT3)
-                                .profil("Profil 3 - Lucide, ambulant")
-                                .tempsToiletteLit(60)
+                                .categorie(PatientCategorie.CAT1)
+                                .profil("profil2")
+                                .tempsToiletteLit(0)
                                 .build();
 
                 Patient patient4 = Patient.builder()
-                                .numeroChambre("202")
-                                .nom("Moreau")
-                                .prenom("Robert")
-                                .etage(2)
+                                .numeroChambre("1er 15 S")
+                                .nom("Boyer")
+                                .prenom("Lucienne")
+                                .etage(1)
                                 .statut(PatientStatut.HOSPITALISE)
-                                .categorie(PatientCategorie.CAT4)
-                                .profil("Profil 4 - Lucide, ambulant")
-                                .tempsToiletteLit(75)
+                                .categorie(PatientCategorie.CAT3)
+                                .profil("profil7")
+                                .tempsToiletteLit(10)
                                 .build();
 
                 Patient patient5 = Patient.builder()
-                                .numeroChambre("301")
-                                .nom("Garcia")
-                                .prenom("Luc")
-                                .etage(3)
+                                .numeroChambre("1er 16 S")
+                                .nom("Lopez")
+                                .prenom("Maria")
+                                .etage(1)
                                 .statut(PatientStatut.HOSPITALISE)
-                                .categorie(PatientCategorie.CAT1)
-                                .profil("Profil 5 - Pertes cogn. - ambulant")
-                                .tempsToiletteLit(90)
-                                .build();
-
-                Patient patient6 = Patient.builder()
-                                .numeroChambre("302")
-                                .nom("Rodriguez")
-                                .prenom("Marie-Christine")
-                                .etage(3)
-                                .statut(PatientStatut.HOSPITALISE)
-                                .categorie(PatientCategorie.CAT2)
-                                .profil("Profil 6 - Lucide, ambulant")
-                                .tempsToiletteLit(45)
+                                .categorie(PatientCategorie.CAT4)
+                                .profil("profil11")
+                                .tempsToiletteLit(20)
                                 .build();
 
                 patientRepository.save(patient1);
@@ -173,9 +162,8 @@ public class DataInitializer implements CommandLineRunner {
                 patientRepository.save(patient3);
                 patientRepository.save(patient4);
                 patientRepository.save(patient5);
-                patientRepository.save(patient6);
 
-                log.info("Created 6 patients");
+                log.info("Created 5 patients");
 
                 // Create some Executions Soins (Activities)
                 ExecutionSoin execution1 = ExecutionSoin.builder()
@@ -209,7 +197,7 @@ public class DataInitializer implements CommandLineRunner {
                                 .build();
 
                 ExecutionSoin execution4 = ExecutionSoin.builder()
-                                .patient(patient4)
+                                .patient(patient5)
                                 .typeSoin(typeSoin5)
                                 .aideSoignant(aideSoignant1)
                                 .dateExecution(LocalDate.now())
