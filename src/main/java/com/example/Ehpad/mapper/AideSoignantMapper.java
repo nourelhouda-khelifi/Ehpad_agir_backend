@@ -20,9 +20,7 @@ public class AideSoignantMapper {
         return AideSoignantDTO.builder()
                 .id(entity.getId())
                 .code(entity.getCode())
-                .secteur(entity.getSecteur())
                 .color(entity.getColor())
-                .actif(entity.getActif())
                 .build();
     }
     
@@ -34,9 +32,7 @@ public class AideSoignantMapper {
         return AideSoignant.builder()
                 .id(dto.getId())
                 .code(dto.getCode())
-                .secteur(dto.getSecteur())
                 .color(dto.getColor())
-                .actif(dto.getActif())
                 .build();
     }
 
@@ -47,9 +43,7 @@ public class AideSoignantMapper {
 
         return AideSoignant.builder()
                 .code(dto.getCode())
-                .secteur(dto.getSecteur())
                 .color(dto.getColor())
-                .actif(dto.getActif())
                 .build();
     }
     

@@ -16,7 +16,5 @@ public class AideSoignantCreateDTO {
     @Size(max = 10, message = "Code ne doit pas dépasser 10 caractères")
     private String code;
 
-    private String secteur;
     private String color;
-    private Boolean actif;
 }

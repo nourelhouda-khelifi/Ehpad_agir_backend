@@ -58,9 +58,7 @@ public class AideSoignantService {
                 .orElseThrow(() -> new EntityNotFoundException("Care staff not found with id: " + id));
         
         aideSoignant.setCode(aideSoignantDTO.getCode());
-        aideSoignant.setSecteur(aideSoignantDTO.getSecteur());
         aideSoignant.setColor(aideSoignantDTO.getColor());
-        aideSoignant.setActif(aideSoignantDTO.getActif());
         
         AideSoignant updatedAideSoignant = aideSoignantRepository.save(aideSoignant);
         return aideSoignantMapper.toDTO(updatedAideSoignant);
