@@ -58,8 +58,6 @@ public class AideSoignantService {
                 .orElseThrow(() -> new EntityNotFoundException("Care staff not found with id: " + id));
         
         aideSoignant.setCode(aideSoignantDTO.getCode());
-        aideSoignant.setNom(aideSoignantDTO.getNom());
-        aideSoignant.setPrenom(aideSoignantDTO.getPrenom());
         aideSoignant.setSecteur(aideSoignantDTO.getSecteur());
         aideSoignant.setColor(aideSoignantDTO.getColor());
         aideSoignant.setActif(aideSoignantDTO.getActif());

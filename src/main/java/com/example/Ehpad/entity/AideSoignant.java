@@ -27,10 +27,10 @@ public class AideSoignant {
     @Column(name = "code", unique = true, nullable = false, length = 10)
     private String code;
     
-    @Column(name = "nom", nullable = false, length = 100)
+    @Column(name = "nom", length = 100)
     private String nom;
     
-    @Column(name = "prenom", nullable = false, length = 100)
+    @Column(name = "prenom", length = 100)
     private String prenom;
     
     @Column(name = "secteur", length = 50)

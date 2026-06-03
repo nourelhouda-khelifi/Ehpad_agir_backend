@@ -12,8 +12,6 @@ import lombok.NoArgsConstructor;
 public class AideSoignantDTO {
     private Long id;
     private String code;
-    private String nom;
-    private String prenom;
     private String secteur;
     private String color;
     private Boolean actif;
