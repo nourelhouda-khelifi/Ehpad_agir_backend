@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.example.Ehpad.dto.PatientCreateDTO;
 import com.example.Ehpad.dto.PatientDTO;
+import com.example.Ehpad.dto.PatientUpdateDTO;
 import com.example.Ehpad.entity.PatientCategorie;
 import com.example.Ehpad.entity.PatientStatut;
 import com.example.Ehpad.service.PatientService;
@@ -69,7 +70,7 @@ public class PatientController {
     }
     
     @PutMapping("/{id}")
-    public ResponseEntity<PatientDTO> updatePatient(@PathVariable Long id, @Valid @RequestBody PatientDTO patientDTO) {
+    public ResponseEntity<PatientDTO> updatePatient(@PathVariable Long id, @RequestBody PatientUpdateDTO patientDTO) {
         log.info("PUT /api/patients/{} - Updating patient", id);
         return ResponseEntity.ok(patientService.updatePatient(id, patientDTO));
     }

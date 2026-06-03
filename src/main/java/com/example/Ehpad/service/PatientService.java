@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.example.Ehpad.dto.PatientCreateDTO;
 import com.example.Ehpad.dto.PatientDTO;
+import com.example.Ehpad.dto.PatientUpdateDTO;
 import com.example.Ehpad.entity.Patient;
 import com.example.Ehpad.entity.PatientCategorie;
 import com.example.Ehpad.entity.PatientStatut;
@@ -69,6 +70,71 @@ public class PatientService {
         patient.setSansDouche(patientDTO.getSansDouche());
         
         Patient updatedPatient = patientRepository.save(patient);
+        return patientMapper.toDTO(updatedPatient);
+    }
+    
+    /**
+     * Mise à jour partielle du patient (PATCH-like behavior)
+     * Seuls les champs non-null du DTO sont mis à jour
+     */
+    public PatientDTO updatePatient(Long id, PatientUpdateDTO patientDTO) {
+        log.info("Partially updating patient with id: {}", id);
+        Patient patient = patientRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Patient not found with id: " + id));
+        
+        log.debug("Patient avant modification: {}", patient);
+        
+        // Mettre à jour uniquement les champs non-null
+        if (patientDTO.getNom() != null) {
+            log.debug("Mise à jour nom: {} -> {}", patient.getNom(), patientDTO.getNom());
+            patient.setNom(patientDTO.getNom());
+        }
+        if (patientDTO.getPrenom() != null) {
+            patient.setPrenom(patientDTO.getPrenom());
+        }
+        if (patientDTO.getNumeroChambre() != null) {
+            patient.setNumeroChambre(patientDTO.getNumeroChambre());
+        }
+        if (patientDTO.getEtage() != null) {
+            patient.setEtage(patientDTO.getEtage());
+        }
+        if (patientDTO.getStatut() != null) {
+            patient.setStatut(patientDTO.getStatut());
+        }
+        if (patientDTO.getCategorie() != null) {
+            log.debug("Mise à jour categorie: {} -> {}", patient.getCategorie(), patientDTO.getCategorie());
+            patient.setCategorie(patientDTO.getCategorie());
+        }
+        if (patientDTO.getProfil() != null) {
+            patient.setProfil(patientDTO.getProfil());
+        }
+        if (patientDTO.getTempsToiletteLit() != null) {
+            patient.setTempsToiletteLit(patientDTO.getTempsToiletteLit());
+        }
+        if (patientDTO.getTempsToiletteVasque() != null) {
+            patient.setTempsToiletteVasque(patientDTO.getTempsToiletteVasque());
+        }
+        if (patientDTO.getTempsToiletteMoyen() != null) {
+            patient.setTempsToiletteMoyen(patientDTO.getTempsToiletteMoyen());
+        }
+        if (patientDTO.getTempsWcMoyen() != null) {
+            patient.setTempsWcMoyen(patientDTO.getTempsWcMoyen());
+        }
+        if (patientDTO.getTempsCoucherMoyen() != null) {
+            patient.setTempsCoucherMoyen(patientDTO.getTempsCoucherMoyen());
+        }
+        if (patientDTO.getAideSoignant() != null) {
+            patient.setAideSoignant(patientDTO.getAideSoignant());
+        }
+        if (patientDTO.getPetitDejeunerAide() != null) {
+            patient.setPetitDejeunerAide(patientDTO.getPetitDejeunerAide());
+        }
+        if (patientDTO.getSansDouche() != null) {
+            patient.setSansDouche(patientDTO.getSansDouche());
+        }
+        
+        Patient updatedPatient = patientRepository.save(patient);
+        log.info("Patient {} mise à jour avec succès. Nouvelle catégorie: {}", id, updatedPatient.getCategorie());
         return patientMapper.toDTO(updatedPatient);
     }
     

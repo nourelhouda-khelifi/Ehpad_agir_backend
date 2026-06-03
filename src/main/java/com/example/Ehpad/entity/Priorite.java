@@ -1,15 +1,15 @@
 package com.example.Ehpad.entity;
 
-public enum PatientCategorie {
+public enum Priorite {
     NON_DEFINI("NON_DEFINI"),
-    CAT1("CAT1"),
-    CAT2("CAT2"),
-    CAT3("CAT3"),
-    CAT4("CAT4");
+    BASSE("BASSE"),
+    NORMALE("NORMALE"),
+    HAUTE("HAUTE"),
+    CRITIQUE("CRITIQUE");
     
     private final String value;
     
-    PatientCategorie(String value) {
+    Priorite(String value) {
         this.value = value;
     }
     

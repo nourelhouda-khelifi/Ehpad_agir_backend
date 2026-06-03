@@ -45,6 +45,10 @@ public class Patient {
     @Column(name = "profil", length = 100)
     private String profil;
     
+    @Column(name = "priorite", length = 20)
+    @Enumerated(EnumType.STRING)
+    private Priorite priorite;
+    
     @Column(name = "temps_toilette_lit")
     private Integer tempsToiletteLit;
     
