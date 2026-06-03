@@ -11,24 +11,24 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class AideSoignantMapper {
-    
+
     public AideSoignantDTO toDTO(AideSoignant entity) {
         if (entity == null) {
             return null;
         }
-        
+
         return AideSoignantDTO.builder()
                 .id(entity.getId())
                 .code(entity.getCode())
                 .color(entity.getColor())
                 .build();
     }
-    
+
     public AideSoignant toEntity(AideSoignantDTO dto) {
         if (dto == null) {
             return null;
         }
-        
+
         return AideSoignant.builder()
                 .id(dto.getId())
                 .code(dto.getCode())
@@ -46,13 +46,13 @@ public class AideSoignantMapper {
                 .color(dto.getColor())
                 .build();
     }
-    
+
     public List<AideSoignantDTO> toDTOList(List<AideSoignant> entities) {
         return entities.stream()
                 .map(this::toDTO)
                 .collect(Collectors.toList());
     }
-    
+
     public List<AideSoignant> toEntityList(List<AideSoignantDTO> dtos) {
         return dtos.stream()
                 .map(this::toEntity)
