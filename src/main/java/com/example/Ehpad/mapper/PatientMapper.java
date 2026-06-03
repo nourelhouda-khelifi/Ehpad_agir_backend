@@ -11,12 +11,12 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class PatientMapper {
-    
+
     public PatientDTO toDTO(Patient entity) {
         if (entity == null) {
             return null;
         }
-        
+
         return PatientDTO.builder()
                 .id(entity.getId())
                 .numeroChambre(entity.getNumeroChambre())
@@ -26,6 +26,7 @@ public class PatientMapper {
                 .statut(entity.getStatut())
                 .categorie(entity.getCategorie())
                 .profil(entity.getProfil())
+                .priorite(entity.getPriorite())
                 .tempsToiletteLit(entity.getTempsToiletteLit())
                 .tempsToiletteVasque(entity.getTempsToiletteVasque())
                 .tempsToiletteMoyen(entity.getTempsToiletteMoyen())
@@ -38,12 +39,12 @@ public class PatientMapper {
                 .updatedAt(entity.getUpdatedAt())
                 .build();
     }
-    
+
     public Patient toEntity(PatientDTO dto) {
         if (dto == null) {
             return null;
         }
-        
+
         return Patient.builder()
                 .id(dto.getId())
                 .numeroChambre(dto.getNumeroChambre())
@@ -53,6 +54,7 @@ public class PatientMapper {
                 .statut(dto.getStatut())
                 .categorie(dto.getCategorie())
                 .profil(dto.getProfil())
+                .priorite(dto.getPriorite())
                 .tempsToiletteLit(dto.getTempsToiletteLit())
                 .tempsToiletteVasque(dto.getTempsToiletteVasque())
                 .tempsToiletteMoyen(dto.getTempsToiletteMoyen())
@@ -77,6 +79,7 @@ public class PatientMapper {
                 .statut(dto.getStatut())
                 .categorie(dto.getCategorie())
                 .profil(dto.getProfil())
+                .priorite(dto.getPriorite())
                 .tempsToiletteLit(dto.getTempsToiletteLit())
                 .tempsToiletteVasque(dto.getTempsToiletteVasque())
                 .tempsToiletteMoyen(dto.getTempsToiletteMoyen())
@@ -87,13 +90,13 @@ public class PatientMapper {
                 .sansDouche(dto.getSansDouche())
                 .build();
     }
-    
+
     public List<PatientDTO> toDTOList(List<Patient> entities) {
         return entities.stream()
                 .map(this::toDTO)
                 .collect(Collectors.toList());
     }
-    
+
     public List<Patient> toEntityList(List<PatientDTO> dtos) {
         return dtos.stream()
                 .map(this::toEntity)

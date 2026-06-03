@@ -2,6 +2,7 @@ package com.example.Ehpad.dto;
 
 import com.example.Ehpad.entity.PatientCategorie;
 import com.example.Ehpad.entity.PatientStatut;
+import com.example.Ehpad.entity.Priorite;
 
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
@@ -32,6 +33,7 @@ public class PatientCreateDTO {
     private PatientStatut statut;
     private PatientCategorie categorie;
     private String profil;
+    private Priorite priorite;
 
     private Integer tempsToiletteLit;
     private Integer tempsToiletteVasque;

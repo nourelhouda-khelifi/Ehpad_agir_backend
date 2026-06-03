@@ -2,6 +2,7 @@ package com.example.Ehpad.dto;
 
 import com.example.Ehpad.entity.PatientCategorie;
 import com.example.Ehpad.entity.PatientStatut;
+import com.example.Ehpad.entity.Priorite;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -23,14 +24,15 @@ public class PatientUpdateDTO {
     private PatientStatut statut;
     private PatientCategorie categorie;
     private String profil;
-    
+    private String priorite; // Changed to String to handle empty string from frontend
+
     // Temps de soins (en minutes)
     private Integer tempsToiletteLit;
     private Integer tempsToiletteVasque;
     private Integer tempsToiletteMoyen;
     private Integer tempsWcMoyen;
     private Integer tempsCoucherMoyen;
-    
+
     // Flags
     private Boolean aideSoignant;
     private Boolean petitDejeunerAide;
