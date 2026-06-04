@@ -133,15 +133,14 @@ public class PatientService {
         if (patientDTO.getProfil() != null) {
             patient.setProfil(patientDTO.getProfil());
         }
-        // Handle priorite: convert empty string to null
+        // Update priorite only when explicitly present in payload (non-null, non-empty)
+        // A null value here means the field was absent from the payload — do not reset.
         if (patientDTO.getPriorite() != null && !patientDTO.getPriorite().isEmpty()) {
             try {
                 patient.setPriorite(Priorite.valueOf(patientDTO.getPriorite()));
             } catch (IllegalArgumentException e) {
                 log.warn("Invalid priorite value: {}", patientDTO.getPriorite());
             }
-        } else {
-            patient.setPriorite(null);
         }
         if (patientDTO.getTempsToiletteLit() != null) {
             patient.setTempsToiletteLit(patientDTO.getTempsToiletteLit());
