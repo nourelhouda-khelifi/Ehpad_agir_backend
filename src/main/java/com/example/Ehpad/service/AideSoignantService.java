@@ -47,9 +47,11 @@ public class AideSoignantService {
 
     public AideSoignantDTO createAideSoignant(AideSoignantCreateDTO aideSoignantDTO) {
         log.info("Creating care staff member: {}", aideSoignantDTO.getCode());
+        if (aideSoignantRepository.findByCode(aideSoignantDTO.getCode()).isPresent()) {
+            throw new IllegalArgumentException("Un aide-soignant avec le code « " + aideSoignantDTO.getCode() + " » existe déjà.");
+        }
         AideSoignant aideSoignant = aideSoignantMapper.toEntity(aideSoignantDTO);
-        AideSoignant savedAideSoignant = aideSoignantRepository.save(aideSoignant);
-        return aideSoignantMapper.toDTO(savedAideSoignant);
+        return aideSoignantMapper.toDTO(aideSoignantRepository.save(aideSoignant));
     }
 
     public AideSoignantDTO updateAideSoignant(Long id, AideSoignantDTO aideSoignantDTO) {

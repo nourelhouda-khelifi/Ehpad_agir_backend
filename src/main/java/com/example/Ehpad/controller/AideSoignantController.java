@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.*;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 
+import java.util.Map;
+
 @RestController
 @RequestMapping("/api/aides-soignants")
 @Slf4j
@@ -42,10 +44,13 @@ public class AideSoignantController {
     }
     
     @PostMapping
-    public ResponseEntity<AideSoignantDTO> createAideSoignant(@Valid @RequestBody AideSoignantCreateDTO aideSoignantDTO) {
+    public ResponseEntity<?> createAideSoignant(@Valid @RequestBody AideSoignantCreateDTO aideSoignantDTO) {
         log.info("POST /api/aides-soignants - Creating care staff: {}", aideSoignantDTO.getCode());
-        AideSoignantDTO createdAideSoignant = aideSoignantService.createAideSoignant(aideSoignantDTO);
-        return ResponseEntity.status(HttpStatus.CREATED).body(createdAideSoignant);
+        try {
+            return ResponseEntity.status(HttpStatus.CREATED).body(aideSoignantService.createAideSoignant(aideSoignantDTO));
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(Map.of("message", e.getMessage()));
+        }
     }
     
     @PutMapping("/{id}")

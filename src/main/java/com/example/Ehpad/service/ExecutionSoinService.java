@@ -84,34 +84,9 @@ public class ExecutionSoinService {
             executionSoin.setPlanningSoin(planningSoin);
         }
 
-        ExecutionSoin savedExecutionSoin = executionSoinRepository.save(executionSoin);
-
-        // Si 2 aides: créer un 2e ExecutionSoin pour le 2e aide
-        if (executionSoinDTO.getSecondAideSoignantId() != null) {
-            ExecutionSoin secondExecutionSoin = new ExecutionSoin();
-            secondExecutionSoin.setPatient(patient);
-            secondExecutionSoin.setTypeSoin(typeSoin);
-            secondExecutionSoin.setDateExecution(executionSoinDTO.getDateExecution());
-            secondExecutionSoin.setHeureExecution(executionSoinDTO.getHeureExecution());
-            secondExecutionSoin.setStatut(PlanningStatut.EFFECTUE);
-            secondExecutionSoin.setCommentaire(executionSoinDTO.getCommentaire());
-
-            AideSoignant secondAideSoignant = aideSoignantRepository
-                    .findById(executionSoinDTO.getSecondAideSoignantId())
-                    .orElseThrow(() -> new EntityNotFoundException("Second care staff not found"));
-            secondExecutionSoin.setAideSoignant(secondAideSoignant);
-
-            if (executionSoinDTO.getPlanningSoinId() != null) {
-                PlanningSoin planningSoin = planningSoinRepository.findById(executionSoinDTO.getPlanningSoinId())
-                        .orElseThrow(() -> new EntityNotFoundException("Care planning not found"));
-                secondExecutionSoin.setPlanningSoin(planningSoin);
-            }
-
-            executionSoinRepository.save(secondExecutionSoin);
-            log.info("Created second care execution for second aide-soignant");
-        }
-
-        return executionSoinMapper.toDTO(savedExecutionSoin);
+        // Le frontend envoie un POST séparé pour chaque aide-soignant sur les soins partagés.
+        // Ne pas créer de 2e exécution ici pour éviter les doublons.
+        return executionSoinMapper.toDTO(executionSoinRepository.save(executionSoin));
     }
 
     public ExecutionSoinDTO updateExecutionSoin(Long id, ExecutionSoinDTO executionSoinDTO) {
