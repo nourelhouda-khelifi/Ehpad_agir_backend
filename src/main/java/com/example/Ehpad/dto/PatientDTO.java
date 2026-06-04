@@ -3,6 +3,7 @@ package com.example.Ehpad.dto;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import com.example.Ehpad.entity.GroupeCoucher;
 import com.example.Ehpad.entity.PatientCategorie;
 import com.example.Ehpad.entity.PatientStatut;
 import com.example.Ehpad.entity.Priorite;
@@ -49,6 +50,7 @@ public class PatientDTO {
     private Boolean aideSoignant;
     private Boolean petitDejeunerAide;
     private Boolean sansDouche;
+    private GroupeCoucher groupeCoucher;
 
     // Audit
     private LocalDateTime createdAt;

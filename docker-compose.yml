@@ -1,4 +1,5 @@
 services:
+
   postgres:
     image: postgres:16-alpine
     container_name: ehpad-postgres
@@ -6,11 +7,37 @@ services:
     environment:
       POSTGRES_DB: ${DB_NAME:-ehpad}
       POSTGRES_USER: ${DB_USER:-ehpad}
-      POSTGRES_PASSWORD: ${DB_PASSWORD:-ehpad}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-Ehpad2026!}
     ports:
       - "${DB_PORT:-5432}:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USER:-ehpad} -d ${DB_NAME:-ehpad}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  backend:
+    build: .
+    container_name: ehpad-backend
+    restart: unless-stopped
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_NAME: ${DB_NAME:-ehpad}
+      DB_USER: ${DB_USER:-ehpad}
+      DB_PASSWORD: ${DB_PASSWORD:-Ehpad2026!}
+      JWT_SECRET: ${JWT_SECRET}
+      JWT_EXPIRATION: ${JWT_EXPIRATION:-86400000}
+      APP_ADMIN_PASSWORD: ${APP_ADMIN_PASSWORD}
+      APP_INFIRMIERE_PASSWORD: ${APP_INFIRMIERE_PASSWORD}
+      SERVER_PORT: 8081
+    ports:
+      - "8081:8081"
 
 volumes:
   postgres_data:

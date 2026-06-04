@@ -10,7 +10,12 @@ import com.example.Ehpad.entity.PatientCategorie;
 import com.example.Ehpad.entity.PatientStatut;
 import com.example.Ehpad.entity.Priorite;
 import com.example.Ehpad.mapper.PatientMapper;
+import com.example.Ehpad.repository.ExecutionSoinRepository;
+import com.example.Ehpad.repository.PatientAlertRepository;
+import com.example.Ehpad.repository.PatientHistoriqueRepository;
+import com.example.Ehpad.repository.PatientNoteRepository;
 import com.example.Ehpad.repository.PatientRepository;
+import com.example.Ehpad.repository.PlanningSoinRepository;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,10 +29,27 @@ import lombok.extern.slf4j.Slf4j;
 public class PatientService {
     private final PatientRepository patientRepository;
     private final PatientMapper patientMapper;
+    private final ExecutionSoinRepository executionSoinRepository;
+    private final PatientAlertRepository patientAlertRepository;
+    private final PlanningSoinRepository planningSoinRepository;
+    private final PatientNoteRepository patientNoteRepository;
+    private final PatientHistoriqueRepository patientHistoriqueRepository;
 
-    public PatientService(PatientRepository patientRepository, PatientMapper patientMapper) {
+    public PatientService(
+            PatientRepository patientRepository,
+            PatientMapper patientMapper,
+            ExecutionSoinRepository executionSoinRepository,
+            PatientAlertRepository patientAlertRepository,
+            PlanningSoinRepository planningSoinRepository,
+            PatientNoteRepository patientNoteRepository,
+            PatientHistoriqueRepository patientHistoriqueRepository) {
         this.patientRepository = patientRepository;
         this.patientMapper = patientMapper;
+        this.executionSoinRepository = executionSoinRepository;
+        this.patientAlertRepository = patientAlertRepository;
+        this.planningSoinRepository = planningSoinRepository;
+        this.patientNoteRepository = patientNoteRepository;
+        this.patientHistoriqueRepository = patientHistoriqueRepository;
     }
 
     public List<PatientDTO> getAllPatients() {
@@ -70,6 +92,7 @@ public class PatientService {
         patient.setAideSoignant(patientDTO.getAideSoignant());
         patient.setPetitDejeunerAide(patientDTO.getPetitDejeunerAide());
         patient.setSansDouche(patientDTO.getSansDouche());
+        patient.setGroupeCoucher(patientDTO.getGroupeCoucher());
 
         Patient updatedPatient = patientRepository.save(patient);
         return patientMapper.toDTO(updatedPatient);
@@ -144,6 +167,9 @@ public class PatientService {
         if (patientDTO.getSansDouche() != null) {
             patient.setSansDouche(patientDTO.getSansDouche());
         }
+        if (patientDTO.getGroupeCoucher() != null) {
+            patient.setGroupeCoucher(patientDTO.getGroupeCoucher());
+        }
 
         Patient updatedPatient = patientRepository.save(patient);
         log.info("Patient {} mise à jour avec succès. Nouvelle catégorie: {}", id, updatedPatient.getCategorie());
@@ -155,7 +181,14 @@ public class PatientService {
         if (!patientRepository.existsById(id)) {
             throw new EntityNotFoundException("Patient not found with id: " + id);
         }
+        // Supprimer les enregistrements liés avant le patient (contraintes FK)
+        executionSoinRepository.deleteAll(executionSoinRepository.findByPatientId(id));
+        patientAlertRepository.deleteAll(patientAlertRepository.findByPatientId(id));
+        planningSoinRepository.deleteAll(planningSoinRepository.findByPatientId(id));
+        patientNoteRepository.deleteAll(patientNoteRepository.findByPatientId(id));
+        patientHistoriqueRepository.deleteAll(patientHistoriqueRepository.findByPatientId(id));
         patientRepository.deleteById(id);
+        log.info("Patient {} et tous ses enregistrements liés supprimés avec succès", id);
     }
 
     public List<PatientDTO> getPatientsByEtage(Integer etage) {

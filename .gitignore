@@ -1,5 +1,11 @@
 HELP.md
 target/
+
+### Fichiers sensibles — ne jamais committer ###
+.env
+*.env.local
+backend.log
+backend-*.log
 .mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
 !**/src/test/**/target/

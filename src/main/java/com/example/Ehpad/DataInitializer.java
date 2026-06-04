@@ -1,240 +1,74 @@
 package com.example.Ehpad;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import com.example.Ehpad.entity.AideSoignant;
-import com.example.Ehpad.entity.AlerteNiveau;
-import com.example.Ehpad.entity.AlerteType;
-import com.example.Ehpad.entity.ExecutionSoin;
-import com.example.Ehpad.entity.Patient;
-import com.example.Ehpad.entity.PatientAlert;
-import com.example.Ehpad.entity.PatientCategorie;
-import com.example.Ehpad.entity.PatientStatut;
-import com.example.Ehpad.entity.PlanningStatut;
-import com.example.Ehpad.entity.TypeSoin;
+import com.example.Ehpad.entity.AppUser;
 import com.example.Ehpad.repository.AideSoignantRepository;
-import com.example.Ehpad.repository.ExecutionSoinRepository;
-import com.example.Ehpad.repository.PatientAlertRepository;
-import com.example.Ehpad.repository.PatientRepository;
-import com.example.Ehpad.repository.TypeSoinRepository;
+import com.example.Ehpad.repository.AppUserRepository;
 
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-
-import java.time.LocalDate;
-import java.time.LocalTime;
 
 @Component
 @Slf4j
+@RequiredArgsConstructor
 public class DataInitializer implements CommandLineRunner {
 
-        private final PatientRepository patientRepository;
         private final AideSoignantRepository aideSoignantRepository;
-        private final TypeSoinRepository typeSoinRepository;
-        private final ExecutionSoinRepository executionSoinRepository;
-        private final PatientAlertRepository patientAlertRepository;
+        private final AppUserRepository appUserRepository;
+        private final PasswordEncoder passwordEncoder;
 
-        public DataInitializer(PatientRepository patientRepository,
-                        AideSoignantRepository aideSoignantRepository,
-                        TypeSoinRepository typeSoinRepository,
-                        ExecutionSoinRepository executionSoinRepository,
-                        PatientAlertRepository patientAlertRepository) {
-                this.patientRepository = patientRepository;
-                this.aideSoignantRepository = aideSoignantRepository;
-                this.typeSoinRepository = typeSoinRepository;
-                this.executionSoinRepository = executionSoinRepository;
-                this.patientAlertRepository = patientAlertRepository;
-        }
+        @Value("${app.admin.password}")
+        private String adminPassword;
+
+        @Value("${app.infirmiere.password}")
+        private String infirmierePassword;
 
         @Override
-        public void run(String... args) throws Exception {
-                log.info("Initializing database with test data...");
+        public void run(String... args) {
+                // ── Utilisateurs par défaut (idempotent) ──────────────────────────
+                if (!appUserRepository.existsByUsername("admin")) {
+                        appUserRepository.save(AppUser.builder()
+                                        .username("admin")
+                                        .password(passwordEncoder.encode(adminPassword))
+                                        .email("admin@ehpad-agir.fr")
+                                        .nom("Administrateur")
+                                        .prenom("EHPAD")
+                                        .role("ADMIN")
+                                        .actif(true)
+                                        .build());
+                        log.info("Utilisateur 'admin' créé");
+                }
 
-                // Create Types de Soins
-                TypeSoin typeSoin1 = TypeSoin.builder()
-                                .code("TOILETTE")
-                                .libelle("Toilette")
-                                .dureeParDefaut(45)
-                                .actif(true)
-                                .build();
+                if (!appUserRepository.existsByUsername("infirmiere")) {
+                        appUserRepository.save(AppUser.builder()
+                                        .username("infirmiere")
+                                        .password(passwordEncoder.encode(infirmierePassword))
+                                        .email("infirmiere@ehpad-agir.fr")
+                                        .nom("Ben")
+                                        .prenom("Foulen")
+                                        .role("INFIRMIERE")
+                                        .actif(true)
+                                        .build());
+                        log.info("Utilisateur 'infirmiere' créé");
+                }
 
-                TypeSoin typeSoin2 = TypeSoin.builder()
-                                .code("DOUCHE")
-                                .libelle("Douche")
-                                .dureeParDefaut(60)
-                                .actif(true)
-                                .build();
+                // ── Aides-soignants d'exemple (seulement si aucun n'existe) ───────
+                // En prod, les vrais soignants sont créés via l'interface d'administration
+                if (aideSoignantRepository.count() == 0) {
+                        aideSoignantRepository.save(AideSoignant.builder()
+                                        .code("SE1").nom("Dupont").prenom("Marie")
+                                        .secteur("Étage 1").color("#FF6B6B").actif(true).build());
+                        aideSoignantRepository.save(AideSoignant.builder()
+                                        .code("SC1").nom("Arnould").prenom("Sophie")
+                                        .secteur("Étage 1").color("#4ECDC4").actif(true).build());
+                        log.info("Aides-soignants par défaut créés");
+                }
 
-                TypeSoin typeSoin5 = TypeSoin.builder()
-                                .code("AIDE_REPAS")
-                                .libelle("Aide repas")
-                                .dureeParDefaut(30)
-                                .actif(true)
-                                .build();
-
-                TypeSoin typeSoin6 = TypeSoin.builder()
-                                .code("COUCHER")
-                                .libelle("Coucher")
-                                .dureeParDefaut(30)
-                                .actif(true)
-                                .build();
-
-                typeSoinRepository.save(typeSoin1);
-                typeSoinRepository.save(typeSoin2);
-                typeSoinRepository.save(typeSoin5);
-                typeSoinRepository.save(typeSoin6);
-
-                log.info("Created 4 care types");
-
-                // Create Aides Soignants
-                AideSoignant aideSoignant1 = AideSoignant.builder()
-                                .code("SE1")
-                                .nom("Dupont")
-                                .prenom("Marie")
-                                .secteur("Étage 1")
-                                .color("#FF6B6B")
-                                .actif(true)
-                                .build();
-
-                AideSoignant aideSoignant2 = AideSoignant.builder()
-                                .code("SC1")
-                                .nom("Arnould")
-                                .prenom("Sophie")
-                                .secteur("Étage 1")
-                                .color("#4ECDC4")
-                                .actif(true)
-                                .build();
-
-                aideSoignantRepository.save(aideSoignant1);
-                aideSoignantRepository.save(aideSoignant2);
-
-                log.info("Created 2 care staff members");
-
-                // Create Patients - matching frontend mockPatients
-                Patient patient1 = Patient.builder()
-                                .numeroChambre("1er 12 S")
-                                .nom("Cormier")
-                                .prenom("Elyane")
-                                .etage(1)
-                                .statut(PatientStatut.HOSPITALISE)
-                                .categorie(PatientCategorie.CAT2)
-                                .profil("profil4")
-                                .tempsToiletteLit(15)
-                                .build();
-
-                Patient patient2 = Patient.builder()
-                                .numeroChambre("1er 13 S")
-                                .nom("Madoire")
-                                .prenom("Monique")
-                                .etage(1)
-                                .statut(PatientStatut.HOSPITALISE)
-                                .categorie(PatientCategorie.CAT1)
-                                .profil("profil1")
-                                .tempsToiletteLit(0)
-                                .build();
-
-                Patient patient3 = Patient.builder()
-                                .numeroChambre("1er 14 S")
-                                .nom("Marysaël")
-                                .prenom("Suzanne")
-                                .etage(1)
-                                .statut(PatientStatut.HOSPITALISE)
-                                .categorie(PatientCategorie.CAT1)
-                                .profil("profil2")
-                                .tempsToiletteLit(0)
-                                .build();
-
-                Patient patient4 = Patient.builder()
-                                .numeroChambre("1er 15 S")
-                                .nom("Boyer")
-                                .prenom("Lucienne")
-                                .etage(1)
-                                .statut(PatientStatut.HOSPITALISE)
-                                .categorie(PatientCategorie.CAT3)
-                                .profil("profil7")
-                                .tempsToiletteLit(10)
-                                .build();
-
-                Patient patient5 = Patient.builder()
-                                .numeroChambre("1er 16 S")
-                                .nom("Lopez")
-                                .prenom("Maria")
-                                .etage(1)
-                                .statut(PatientStatut.HOSPITALISE)
-                                .categorie(PatientCategorie.CAT4)
-                                .profil("profil11")
-                                .tempsToiletteLit(20)
-                                .build();
-
-                patientRepository.save(patient1);
-                patientRepository.save(patient2);
-                patientRepository.save(patient3);
-                patientRepository.save(patient4);
-                patientRepository.save(patient5);
-
-                log.info("Created 5 patients");
-
-                // Create test alerts
-                PatientAlert alert1 = PatientAlert.builder()
-                                .patient(patient1)
-                                .type(AlerteType.DOUCHE_MANQUANTE)
-                                .niveau(AlerteNiveau.MOYEN)
-                                .message("Aucune douche planifiée cette semaine")
-                                .resolue(false)
-                                .build();
-
-                PatientAlert alert2 = PatientAlert.builder()
-                                .patient(patient1)
-                                .type(AlerteType.PATIENT_ALERTE)
-                                .niveau(AlerteNiveau.CRITIQUE)
-                                .message("Patient signale une douleur persistante")
-                                .resolue(false)
-                                .build();
-
-                PatientAlert alert3 = PatientAlert.builder()
-                                .patient(patient2)
-                                .type(AlerteType.AS_SURCHARGE)
-                                .niveau(AlerteNiveau.BAS)
-                                .message("Aide-soignant surchargée aujourd'hui")
-                                .resolue(false)
-                                .build();
-
-                patientAlertRepository.save(alert1);
-                patientAlertRepository.save(alert2);
-                patientAlertRepository.save(alert3);
-
-                log.info("Created 3 test alerts");
-
-                // Create test ExecutionSoins for dashboard - today's activities: 2 douches only
-                LocalDate today = LocalDate.now();
-
-                // Douche pour patient 2
-                ExecutionSoin exec2 = ExecutionSoin.builder()
-                                .patient(patient2)
-                                .aideSoignant(aideSoignant2)
-                                .typeSoin(typeSoin2)
-                                .dateExecution(today)
-                                .heureExecution("09:00")
-                                .statut(PlanningStatut.EFFECTUE)
-                                .commentaire("Douche réalisée")
-                                .build();
-
-                // Douche pour patient 5
-                ExecutionSoin exec5 = ExecutionSoin.builder()
-                                .patient(patient5)
-                                .aideSoignant(aideSoignant1)
-                                .typeSoin(typeSoin2)
-                                .dateExecution(today)
-                                .heureExecution("10:00")
-                                .statut(PlanningStatut.EFFECTUE)
-                                .commentaire("Douche réalisée")
-                                .build();
-
-                executionSoinRepository.save(exec2);
-                executionSoinRepository.save(exec5);
-
-                log.info("Created 2 test ExecutionSoins (2 douches today)");
-
-                log.info("Database initialization completed!");
+                log.info("Initialisation terminée — patients et types de soins gérés par Flyway (V4/V5).");
         }
 }

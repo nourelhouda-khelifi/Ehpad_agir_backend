@@ -72,6 +72,10 @@ public class Patient {
     
     @Column(name = "sans_douche")
     private Boolean sansDouche;
+
+    @Column(name = "groupe_coucher", length = 20)
+    @Enumerated(EnumType.STRING)
+    private GroupeCoucher groupeCoucher;
     
     @CreationTimestamp
     @Column(name = "created_at", nullable = false, updatable = false)

@@ -43,7 +43,10 @@ public class AideSoignantMapper {
 
         return AideSoignant.builder()
                 .code(dto.getCode())
+                .nom(dto.getCode())   // nom = code quand non fourni
+                .prenom("")
                 .color(dto.getColor())
+                .actif(true)
                 .build();
     }
 
