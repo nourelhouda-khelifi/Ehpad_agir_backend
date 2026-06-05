@@ -11,6 +11,7 @@ import com.example.Ehpad.service.PatientService;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import jakarta.validation.Valid;
@@ -18,6 +19,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @RestController
 @RequestMapping("/api/patients")
+@PreAuthorize("hasAnyRole('INFIRMIERE', 'ADMIN')")
 @Slf4j
 public class PatientController {
     private final PatientService patientService;
@@ -76,6 +78,7 @@ public class PatientController {
     }
     
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Void> deletePatient(@PathVariable Long id) {
         log.info("DELETE /api/patients/{}", id);
         patientService.deletePatient(id);

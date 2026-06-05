@@ -8,6 +8,7 @@ import com.example.Ehpad.service.TypeSoinService;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import jakarta.validation.Valid;
@@ -15,6 +16,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @RestController
 @RequestMapping("/api/types-soins")
+@PreAuthorize("hasAnyRole('INFIRMIERE', 'ADMIN')")
 @Slf4j
 public class TypeSoinController {
     private final TypeSoinService typeSoinService;
@@ -42,6 +44,7 @@ public class TypeSoinController {
     }
     
     @PostMapping
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<TypeSoinDTO> createTypeSoin(@Valid @RequestBody TypeSoinCreateDTO typeSoinDTO) {
         log.info("POST /api/types-soins - Creating care type: {}", typeSoinDTO.getCode());
         TypeSoinDTO createdTypeSoin = typeSoinService.createTypeSoin(typeSoinDTO);
@@ -49,12 +52,14 @@ public class TypeSoinController {
     }
     
     @PutMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<TypeSoinDTO> updateTypeSoin(@PathVariable Long id, @Valid @RequestBody TypeSoinDTO typeSoinDTO) {
         log.info("PUT /api/types-soins/{} - Updating care type", id);
         return ResponseEntity.ok(typeSoinService.updateTypeSoin(id, typeSoinDTO));
     }
     
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Void> deleteTypeSoin(@PathVariable Long id) {
         log.info("DELETE /api/types-soins/{}", id);
         typeSoinService.deleteTypeSoin(id);

@@ -4,6 +4,7 @@ import com.example.Ehpad.entity.AideSoignantAbsence;
 import com.example.Ehpad.repository.AideSoignantAbsenceRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
@@ -11,6 +12,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
+@PreAuthorize("hasAnyRole('INFIRMIERE', 'ADMIN')")
 @RestController
 @RequestMapping("/api/absences")
 @CrossOrigin(origins = "http://localhost:5173")
@@ -95,6 +97,7 @@ public class AideSoignantAbsenceController {
      * Supprimer une absence
      */
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         if (absenceRepository.existsById(id)) {
             absenceRepository.deleteById(id);

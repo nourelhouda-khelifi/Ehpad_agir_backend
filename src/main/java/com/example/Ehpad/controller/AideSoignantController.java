@@ -8,6 +8,7 @@ import com.example.Ehpad.service.AideSoignantService;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import jakarta.validation.Valid;
@@ -17,6 +18,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/api/aides-soignants")
+@PreAuthorize("hasAnyRole('INFIRMIERE', 'ADMIN')")
 @Slf4j
 public class AideSoignantController {
     private final AideSoignantService aideSoignantService;
@@ -44,6 +46,7 @@ public class AideSoignantController {
     }
     
     @PostMapping
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> createAideSoignant(@Valid @RequestBody AideSoignantCreateDTO aideSoignantDTO) {
         log.info("POST /api/aides-soignants - Creating care staff: {}", aideSoignantDTO.getCode());
         try {
@@ -54,12 +57,14 @@ public class AideSoignantController {
     }
     
     @PutMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<AideSoignantDTO> updateAideSoignant(@PathVariable Long id, @Valid @RequestBody AideSoignantDTO aideSoignantDTO) {
         log.info("PUT /api/aides-soignants/{} - Updating care staff", id);
         return ResponseEntity.ok(aideSoignantService.updateAideSoignant(id, aideSoignantDTO));
     }
     
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Void> deleteAideSoignant(@PathVariable Long id) {
         log.info("DELETE /api/aides-soignants/{}", id);
         aideSoignantService.deleteAideSoignant(id);

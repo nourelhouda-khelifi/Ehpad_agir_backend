@@ -13,7 +13,8 @@ RUN ./mvnw package -DskipTests -q
 FROM eclipse-temurin:21-jre-alpine
 WORKDIR /app
 
-RUN addgroup -S ehpad && adduser -S ehpad -G ehpad
+RUN apk add --no-cache curl && \
+    addgroup -S ehpad && adduser -S ehpad -G ehpad
 USER ehpad
 
 COPY --from=build /app/target/*.jar app.jar

@@ -6,12 +6,14 @@ import com.example.Ehpad.service.ExecutionSoinService;
 import com.example.Ehpad.service.PatientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.util.*;
 import java.util.stream.Collectors;
 
+@PreAuthorize("hasAnyRole('INFIRMIERE', 'ADMIN')")
 @RestController
 @RequestMapping("/api/planning")
 public class PlanningController {
