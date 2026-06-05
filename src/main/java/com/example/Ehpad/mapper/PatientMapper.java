@@ -36,6 +36,7 @@ public class PatientMapper {
                 .petitDejeunerAide(entity.getPetitDejeunerAide())
                 .sansDouche(entity.getSansDouche())
                 .groupeCoucher(entity.getGroupeCoucher())
+                .groupeWC(entity.getGroupeWC())
                 .createdAt(entity.getCreatedAt())
                 .updatedAt(entity.getUpdatedAt())
                 .build();
@@ -65,6 +66,7 @@ public class PatientMapper {
                 .petitDejeunerAide(dto.getPetitDejeunerAide())
                 .sansDouche(dto.getSansDouche())
                 .groupeCoucher(dto.getGroupeCoucher())
+                .groupeWC(dto.getGroupeWC())
                 .build();
     }
 
@@ -91,6 +93,7 @@ public class PatientMapper {
                 .petitDejeunerAide(dto.getPetitDejeunerAide())
                 .sansDouche(dto.getSansDouche())
                 .groupeCoucher(dto.getGroupeCoucher())
+                .groupeWC(dto.getGroupeWC())
                 .build();
     }
 

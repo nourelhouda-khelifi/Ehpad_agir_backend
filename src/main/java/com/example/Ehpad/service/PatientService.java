@@ -169,6 +169,9 @@ public class PatientService {
         if (patientDTO.getGroupeCoucher() != null) {
             patient.setGroupeCoucher(patientDTO.getGroupeCoucher());
         }
+        if (patientDTO.getGroupeWC() != null) {
+            patient.setGroupeWC(patientDTO.getGroupeWC());
+        }
 
         Patient updatedPatient = patientRepository.save(patient);
         log.info("Patient {} mise à jour avec succès. Nouvelle catégorie: {}", id, updatedPatient.getCategorie());

@@ -1,6 +1,7 @@
 package com.example.Ehpad.dto;
 
 import com.example.Ehpad.entity.GroupeCoucher;
+import com.example.Ehpad.entity.GroupeWC;
 import com.example.Ehpad.entity.PatientCategorie;
 import com.example.Ehpad.entity.PatientStatut;
 import com.example.Ehpad.entity.Priorite;
@@ -39,4 +40,5 @@ public class PatientUpdateDTO {
     private Boolean petitDejeunerAide;
     private Boolean sansDouche;
     private GroupeCoucher groupeCoucher;
+    private GroupeWC groupeWC;
 }
