@@ -15,6 +15,8 @@ public interface ExecutionSoinRepository extends JpaRepository<ExecutionSoin, Lo
     List<ExecutionSoin> findByAideSoignantId(Long aideSoignantId);
     
     List<ExecutionSoin> findByDateExecution(LocalDate dateExecution);
-    
+
     List<ExecutionSoin> findByPatientIdAndDateExecution(Long patientId, LocalDate dateExecution);
+
+    List<ExecutionSoin> findByDateExecutionBetween(LocalDate startDate, LocalDate endDate);
 }

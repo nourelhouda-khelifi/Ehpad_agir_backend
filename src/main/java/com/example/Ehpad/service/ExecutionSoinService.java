@@ -119,6 +119,12 @@ public class ExecutionSoinService {
         executionSoinRepository.deleteById(id);
     }
 
+    public List<ExecutionSoinDTO> getExecutionsByDateRange(LocalDate startDate, LocalDate endDate) {
+        log.info("Fetching care executions between {} and {}", startDate, endDate);
+        return executionSoinMapper.toDTOList(
+            executionSoinRepository.findByDateExecutionBetween(startDate, endDate));
+    }
+
     public List<ExecutionSoinDTO> getExecutionsByPatientId(Long patientId) {
         log.info("Fetching care executions for patient: {}", patientId);
         return executionSoinMapper.toDTOList(executionSoinRepository.findByPatientId(patientId));

@@ -3,6 +3,8 @@ package com.example.Ehpad.controller;
 import java.time.LocalDate;
 import java.util.List;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import com.example.Ehpad.dto.ExecutionSoinCreateDTO;
 import com.example.Ehpad.dto.ExecutionSoinDTO;
 import com.example.Ehpad.service.ExecutionSoinService;
@@ -48,6 +50,14 @@ public class ExecutionSoinController {
         return ResponseEntity.ok(executionSoinService.getExecutionsByAideSoignantId(aideSoignantId));
     }
     
+    @GetMapping("/range")
+    public ResponseEntity<List<ExecutionSoinDTO>> getExecutionsByRange(
+            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
+            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate) {
+        log.info("GET /api/executions/range?startDate={}&endDate={}", startDate, endDate);
+        return ResponseEntity.ok(executionSoinService.getExecutionsByDateRange(startDate, endDate));
+    }
+
     @GetMapping("/date/{date}")
     public ResponseEntity<List<ExecutionSoinDTO>> getExecutionsByDate(@PathVariable LocalDate date) {
         log.info("GET /api/executions/date/{}", date);
