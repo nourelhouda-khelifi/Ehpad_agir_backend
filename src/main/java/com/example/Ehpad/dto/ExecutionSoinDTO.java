@@ -34,6 +34,7 @@ public class ExecutionSoinDTO {
     private String heureExecution;
     private PlanningStatut statut;
     private String commentaire;
+    private String notesSoignant;
     
     // Audit
     private LocalDateTime createdAt;

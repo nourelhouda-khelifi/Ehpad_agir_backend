@@ -38,6 +38,7 @@ public class ExecutionSoinMapper {
                 .heureExecution(entity.getHeureExecution())
                 .statut(entity.getStatut())
                 .commentaire(entity.getCommentaire())
+                .notesSoignant(entity.getNotesSoignant())
                 .createdAt(entity.getCreatedAt())
                 .updatedAt(entity.getUpdatedAt())
                 .patient(patientMapper.toDTO(entity.getPatient()))
@@ -71,6 +72,7 @@ public class ExecutionSoinMapper {
                 .heureExecution(dto.getHeureExecution())
                 .statut(dto.getStatut())
                 .commentaire(dto.getCommentaire())
+                .notesSoignant(dto.getNotesSoignant())
                 .build();
     }
     

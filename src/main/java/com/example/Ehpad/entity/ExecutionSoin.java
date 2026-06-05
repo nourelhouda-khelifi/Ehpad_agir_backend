@@ -59,6 +59,9 @@ public class ExecutionSoin {
     
     @Column(name = "commentaire", columnDefinition = "TEXT")
     private String commentaire;
+
+    @Column(name = "notes_soignant", columnDefinition = "TEXT")
+    private String notesSoignant;
     
     @CreationTimestamp
     @Column(name = "created_at", nullable = false, updatable = false)

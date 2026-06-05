@@ -37,4 +37,5 @@ public class ExecutionSoinCreateDTO {
 
     private PlanningStatut statut;
     private String commentaire;
+    private String notesSoignant;
 }
